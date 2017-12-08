@@ -1,50 +1,44 @@
-# Black Ops 3 Zombies Things
+# Black Ops 3 Zombies Info
 
 A collection of information and things to play with, related to Call of Duty Black Ops 3 Zombies.
 
+*Developed with React as a static page/app; learning small React toolset & development pattern.*
+
+## Features
+
 - [x] Gobblegums
-- [ ] Newton's Cookbook Recipes (WIP)
-- [ ] Trivia Quiz
+- [x] Newton's Cookbook Recipes
+- [x] Trivia Quiz
 - [ ] EE guides & helpers?
-- [ ] Community Gobblegum Ideas
 
-## Gobblegums
 
-- Gobblegums information, styled similar to Black Ops 3 menu.
+### Gobblegums
 
-## Newton's Cookbook Recipes
+Gobblegums information, similar to Black Ops 3 menu.
+
+### Newton's Cookbook Recipes
 
 - [x] Daily recipes updates
 - [x] Full cookbook recipes history
-- [ ] Find previous recipes for Gobblegums (WIP)
-- [ ] View recipes cycles
-- [ ] Recipes ratings?
+- [x] Find previous recipes for Gobblegums
+- [x] View recipes cycles
 
-## Trivia Quiz
+### Trivia Quiz
 
-Quiz about anything in zombies.
+Quiz about zombies.
 
-Questions:
+Question Types:
 
-- Map trivia (Weapons, wallbuys, perk etc.)
-- Sound trivia (similar to Dota2 Sound Quiz)
-- EE trivia
-- Story trivia?
+- [x] Map trivia (Weapons, wallbuys, perk etc.)
+- [x] Sound trivia (similar to Dota2 Sound Quiz)
+- [ ] EE trivia?
+- [ ] Story trivia?
 
-Preferably in multiple choice or true/false questions.
+## Develop
 
-## EE guides & helpers?
+Clone repo, install NPM dependencies, develop with Webpack watch mode; or build as static page.
 
-Ideas?
-
-## Community Gobblegum Ideas (Server)
-
-Gobblegum ideas from the community - create your own Gobblegums and let others discuss about them!
-
-- Featured (Top rated of times/Recently added etc.)
-- Browse by Categories i.e. rarity, tags?
-- Submit ideas with form
-  - name, rarity, usage, description, details
-  - upload picture
-
-Examples of ideas from Reddit...
+1. Clone this repo.
+2. On repo root, run `npm install` to install NPM package dependecies.
+3. Choose to develop with local webpack-dev-server & watch mode (live reload) -> `npm run watch`
+4. Build as static webpage -> `npm run build`

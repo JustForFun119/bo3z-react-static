@@ -1,4 +1,5 @@
 var path = require('path');
+var ContextReplacementPlugin = require('webpack').ContextReplacementPlugin;
 
 module.exports = {
     entry: './src/index.js',
@@ -7,26 +8,24 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.css', '.scss']
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/
+                include: path.resolve(__dirname, 'src')
             },
             {
                 test: /\.scss$/,
                 loaders: ['style-loader', 'css-loader', 'sass-loader']
-            },
-            {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader',
-                include: /flexboxgrid/
             }
         ]
     },
+    plugins: [
+        new ContextReplacementPlugin(/moment[\/\\]locale$/, /en/)
+    ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         historyApiFallback: true

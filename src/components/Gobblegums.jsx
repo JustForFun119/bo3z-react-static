@@ -1,14 +1,15 @@
 // React
 import React from 'react'
 import PropTypes from 'prop-types'
-// React Router
-import { withRouter } from 'react-router-dom'
+// React Router 'withRouter' wrap for URL identification
+import { withRouter } from 'react-router'
 // UI Components
 import { Tabs, Tab } from 'material-ui/Tabs'
 import SwipeableViews from 'react-swipeable-views'
-import Dialog from 'material-ui/Dialog'
+import Dialog from 'material-ui/Dialog' // gum details modal
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton'
+import { RecipeSearchResult } from './cookbook/Search' // recipe peek component (for tablet & larger screens)
 // Style
 import style from '!style-loader!css-loader!sass-loader!../sass/gobblegums.scss' // SCSS stylesheet
 const styles = {
@@ -43,101 +44,40 @@ const gum_rarity_styles = {
 
 class GumsGridControl extends React.Component {
     constructor(props) {
-        super(props)
-        const { classic, mega, rare, ultra_rare } = props.gums
+        super(props);
         this.state = {
-            gums: {
-                classic: [...classic.normal, ...classic.whimsical],
-                mega: [...mega, ...rare, ...ultra_rare]
-            },
-            selectedGum: classic.normal[0],
-            tabIndex: 0,
-            dialogIsOpen: false
-        }
-        // catch 'gum' URL param (if any)
-        this.catchUrlGumParam(this.props)
-        this.updateSelectedGum = this.updateSelectedGum.bind(this)
-        this.changeTab = this.changeTab.bind(this)
-        this.openDialog = this.openDialog.bind(this)
-        this.closeDialog = this.closeDialog.bind(this)
-        this.goToRecipe = this.goToRecipe.bind(this)
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.catchUrlGumParam(nextProps)
-    }
-
-    catchUrlGumParam(props) {
-        const { gum: urlParamGum } = props.match.params
-        // Select gum from URL param (if any)
-        if (urlParamGum) {
-            const gum = gums.getGumByName(decodeURIComponent(urlParamGum)) // get gum by decoding name from URL
-            if (gum) {
-                Object.assign(this.state, { // assign new state if param is caught
-                    selectedGum: gum, // set selected gum state
-                    // change to tab of gum category, default to first tab
-                    tabIndex: gums.getGumCategory(gum) === 'Mega' ? 1 : 0,
-                    // show gum details dialog on mobile screen size
-                    dialogIsOpen: this.props.screenSize.isMobileXs || this.props.screenSize.isMobile
-                })
-            }
-        }
-    }
-
-    updateSelectedGum(gum) {
-        this.props.history.push('/gobblegums/' + encodeURIComponent(gum.name))
-        this.setState({ selectedGum: gum })
-        if (this.props.screenSize.isMobile) { this.openDialog() }
+            tabIndex: 0
+        };
+        this.changeTab = this.changeTab.bind(this);
     }
 
     changeTab(value) {
-        this.setState({ tabIndex: value })
-    }
-
-    openDialog() {
-        this.setState({ dialogIsOpen: true })
-    }
-
-    closeDialog() {
-        this.setState({ dialogIsOpen: false })
-    }
-
-    goToRecipe(gumName) {
-        console.log('Go to recipe of %s', gumName)
+        this.setState({ tabIndex: value });
     }
 
     render() {
-        const selectedGum = this.state.selectedGum
-        const classicGums = this.state.gums.classic
-        const megaGums = this.state.gums.mega
+        const gums = this.props.gums;
         return (
             <div className="grid-container">
-                <GumDetailsCard gum={selectedGum} seeRecipe={this.goToRecipe} />
-                <GumDetailsDialog gum={selectedGum} seeRecipe={this.goToRecipe}
-                    open={this.state.dialogIsOpen} onClose={this.closeDialog} />
-                <Tabs value={this.state.tabIndex} onChange={this.changeTab}
-                    style={styles.Tabs.Container}>
-                    <Tab label="Classic" value={0} />
-                    <Tab label="Mega" value={1} />
-                </Tabs>
-                <SwipeableViews index={this.state.tabIndex} onChangeIndex={this.changeTab}>
-                    <GumsGrid.Container gums={classicGums}
-                        onGumSelected={this.updateSelectedGum} />
-                    <GumsGrid.Container gums={megaGums}
-                        onGumSelected={this.updateSelectedGum} />
-                </SwipeableViews>
-                {(this.props.screenSize.isTablet || this.props.screenSize.isDesktop) &&
-                    <GumRecipesPeek gum={selectedGum} />}
+                <div>
+                    <Tabs value={this.state.tabIndex} onChange={this.changeTab}
+                        style={styles.Tabs.Container}>
+                        <Tab label="Classic" value={0} />
+                        <Tab label="Mega" value={1} />
+                    </Tabs>
+                    <SwipeableViews index={this.state.tabIndex} onChangeIndex={this.changeTab}>
+                        <GumsGrid.Container gums={gums.classic} onGumSelected={this.props.updateSelectedGum} />
+                        <GumsGrid.Container gums={gums.mega} onGumSelected={this.props.updateSelectedGum} />
+                    </SwipeableViews>
+                </div>
             </div>
-        )
+        );
     }
 }
 GumsGridControl.propTypes = {
-    screenSize: PropTypes.object,
-    match: PropTypes.object,
-    history: PropTypes.object,
-    gums: PropTypes.object
-}
+    gums: PropTypes.object,
+    updateSelectedGum: PropTypes.func
+};
 
 const GumsGrid = {
     Container: (props) => (
@@ -164,37 +104,45 @@ const GumsGrid = {
             </div>
         )
     }
-}
+};
 GumsGrid.Container.propTypes = {
     gums: PropTypes.array,
     onGumSelected: PropTypes.func
-}
+};
 GumsGrid.Item.propTypes = {
     gum: PropTypes.object,
     onGumSelected: PropTypes.func
-}
+};
+
+const ActionSeeRecipe = (props) => (
+    <FlatButton
+        label="See Recipes"
+        primary={true}
+        onTouchTap={() => props.goToRecipe(props.gumName)} />
+);
+ActionSeeRecipe.propTypes = {
+    goToRecipe: PropTypes.func,
+    gumName: PropTypes.string
+};
 
 // Gum Details Dialog View (for mobile)
 const GumDetailsDialog = (props) => {
-    const { gum } = props
-    const rarity = gum.rarity ? gums.rarity[gum.rarity] : undefined
-    let gumActivateText = gum.activation.match(/(\w+) (\(.*\))/)
+    const { gum } = props;
+    const rarity = gum.rarity ? gums.rarity[gum.rarity] : undefined;
+    let gumActivateText = gum.activation.match(/(\w+) (\(.*\))/);
     gumActivateText = gumActivateText && gumActivateText.length > 1 ?
         (<span>{gumActivateText[1]}<br />{gumActivateText[2]}</span>) :
-        (gum.activation)
+        (gum.activation);
 
-    const actions = [
-        <FlatButton
-            key={0}
-            label="Close"
-            primary={true}
-            onTouchTap={props.onClose} />,
-        <FlatButton
-            key={1}
-            label="See Recipes"
-            secondary={true}
-            onTouchTap={() => props.seeRecipe(gum.name)} />
-    ]
+    const actions = [];
+    // add 'see recipe' action button if gum is of some rarity i.e. not Classic
+    if (rarity) {
+        actions.push(
+            <ActionSeeRecipe key={0}
+                goToRecipe={props.goToRecipe}
+                gumName={gum.name} />
+        );
+    }
 
     return (
         <Dialog
@@ -204,6 +152,7 @@ const GumDetailsDialog = (props) => {
             contentStyle={styles.Dialog.Content}
             titleStyle={styles.Dialog.Title}
             bodyStyle={styles.Dialog.Body}
+            onRequestClose={props.onClose}
             autoScrollBodyContent={true}>
             <div className="gum-details-dialog">
                 <div className="gum-text">
@@ -219,23 +168,34 @@ const GumDetailsDialog = (props) => {
                 </div>
             </div>
         </Dialog>
-    )
-}
+    );
+};
 GumDetailsDialog.propTypes = {
     gum: PropTypes.object,
     open: PropTypes.bool,
     onClose: PropTypes.func,
-    seeRecipe: PropTypes.func
-}
+    goToRecipe: PropTypes.func
+};
 
 // Gum Details Card View (for tablet & desktop)
 const GumDetailsCard = (props) => {
-    const { gum } = props
-    const rarity = gum.rarity ? gums.rarity[gum.rarity] : undefined
+    const { gum } = props;
+    const rarity = gum.rarity ? gums.rarity[gum.rarity] : undefined;
     const style = {
         width: 'auto',
         minWidth: 'auto'
+    };
+
+    const actions = [];
+    // add 'see recipe' action button if gum is of some rarity i.e. not Classic
+    if (rarity) {
+        actions.push(
+            <ActionSeeRecipe key={0}
+                goToRecipe={props.goToRecipe}
+                gumName={gum.name} />
+        );
     }
+
     return (
         <Card className="gum-details-card">
             {rarity ?
@@ -248,12 +208,14 @@ const GumDetailsCard = (props) => {
             </CardMedia>
             <CardTitle title={gum.name} subtitle={gum.activation} />
             <CardText>{gum.effects}</CardText>
+            <CardActions>{actions}</CardActions>
         </Card>
-    )
-}
+    );
+};
 GumDetailsCard.propTypes = {
-    gum: PropTypes.object
-}
+    gum: PropTypes.object,
+    goToRecipe: PropTypes.func
+};
 
 // Cookbook recipes peek view for gum (for tablet & desktop)
 const GumRecipesPeek = (props) => {
@@ -262,27 +224,93 @@ const GumRecipesPeek = (props) => {
     return (
         <div className="gum-recipes">
             Related Recipes for {gum.name}...
+            <RecipeSearchResult
+                cookbookData={this.props.cookbookData}
+                searchQuery={this.state.searchQuery}
+                showRecipeDetails={this.props.showRecipeDetails} />
         </div>
     )
-}
+};
 GumRecipesPeek.propTypes = {
     gum: PropTypes.object
-}
+};
 
-// Wrap component that change URL/history state with 'withRouter' from React Router
-const GumsGridControlRouter = withRouter(GumsGridControl)
+class Gobblegums extends React.Component {
+    constructor(props) {
+        super(props);
+        const { classic, mega, rare, ultra_rare } = gums.tree;
+        this.state = {
+            gums: {
+                classic: [...classic.normal, ...classic.whimsical],
+                mega: [...mega, ...rare, ...ultra_rare]
+            },
+            selectedGum: classic.normal[0],
+            dialogIsOpen: false
+        };
+        // catch 'gum' URL parameter (if any)
+        this.catchUrlGumParam(this.props.match.params);
+        this.updateSelectedGum = this.updateSelectedGum.bind(this);
+    }
 
-export default class Gobblegums extends React.Component {
+    componentWillReceiveProps(nextProps) {
+        this.catchUrlGumParam(nextProps.match.params);
+    }
+
+    catchUrlGumParam(urlParams) {
+        // Select gum from URL param (if any)
+        if (urlParams.gum) {
+            const gum = gums.getGumByName(decodeURIComponent(urlParams.gum)); // get gum by decoding name from URL
+            if (gum) {
+                Object.assign(this.state, { // assign new state if param is caught
+                    selectedGum: gum, // set selected gum state
+                    // change to tab of gum category, default to first tab
+                    tabIndex: gums.getGumCategory(gum) === 'Mega' ? 1 : 0,
+                    // show gum details dialog on mobile screen size
+                    dialogIsOpen: this.props.screenSize.isMobileXs || this.props.screenSize.isMobile
+                });
+            }
+        }
+    }
+
+    updateSelectedGum(gum) {
+        this.props.history.push('/gobblegums/' + encodeURIComponent(gum.name));
+        this.setState({ selectedGum: gum });
+        if (this.props.screenSize.isMobile) { this.openDialog(); }
+    }
+
+    goToRecipe(gumName) {
+        this.props.history.push('/cookbook/search/gum/' + encodeURIComponent(gumName))
+    }
+
+    openDialog() { this.setState({ dialogIsOpen: true }); }
+
+    closeDialog() { this.setState({ dialogIsOpen: false }); }
+
     render() {
         return (
             <div>
-                <GumsGridControlRouter
-                    screenSize={this.props.screenSize}
-                    gums={gums.map} />
+                <GumDetailsCard gum={this.state.selectedGum} goToRecipe={this.goToRecipe.bind(this)} />
+                <GumDetailsDialog gum={this.state.selectedGum} goToRecipe={this.goToRecipe.bind(this)}
+                    open={this.state.dialogIsOpen} onClose={this.closeDialog.bind(this)} />
+                <GumsGridControl gums={this.state.gums} goToRecipe={this.goToRecipe.bind(this)}
+                    updateSelectedGum={this.updateSelectedGum.bind(this)} />
+                {(this.props.screenSize.isTablet || this.props.screenSize.isDesktop) &&
+                    <GumRecipesPeek gum={this.state.selectedGum} />}
             </div>
-        )
+        );
     }
 }
 Gobblegums.propTypes = {
-    screenSize: PropTypes.object
-}
+    screenSize: PropTypes.object,
+    match: PropTypes.object,
+    history: PropTypes.object,
+    cookbookData: PropTypes.object
+};
+
+// Wrap component that change URL/history state with 'withRouter' from React Router
+export default withRouter(Gobblegums);
+
+// helper function: capitalize string TODO: move to another script for clarification
+String.prototype.capitalize = function () {
+    return this.split(' ').map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' ');
+};

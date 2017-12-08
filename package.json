@@ -1,5 +1,5 @@
 {
-  "name": "bo3-zombies",
+  "name": "bo3-zombies-react",
   "version": "1.0.0",
   "description": "Anything about Call of Duty Black Ops 3 Zombies",
   "main": "index.js",
@@ -26,7 +26,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.5.5",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
     "lodash": "^4.17.4",
@@ -34,10 +34,9 @@
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
-    "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.1",
     "react-responsive": "^1.3.4",
-    "react-router-bootstrap": "^0.24.2",
+    "react-router": "^4.2.0",
     "react-router-dom": "^4.1.2",
     "react-swipeable-views": "^0.12.5",
     "react-tap-event-plugin": "^2.0.1"

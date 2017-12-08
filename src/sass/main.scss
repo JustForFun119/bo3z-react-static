@@ -31,3 +31,20 @@ $desktop-width: 1024px;
         @content;
     }
 }
+
+.centerPseudo {
+    display: inline-block;
+    text-align: center;
+}
+
+.centerPseudo::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    width: 0px;
+}
+
+.hideScrollbar::-webkit-scrollbar {
+    display: none;
+}

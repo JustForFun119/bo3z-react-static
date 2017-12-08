@@ -135,6 +135,7 @@ $gum-rarity-ultra-rare-color: #FF6EFF;
     }
 }
 
+$tablet-gums-grid-view-height: 42vh;
 // Tablet: >= 768px < 1024px
 @include tablet {
     /* Grid Container */
@@ -149,8 +150,7 @@ $gum-rarity-ultra-rare-color: #FF6EFF;
     }
     .gums-grid {
         grid-template-columns: repeat(4, $gum-grid-item-size);
-        min-height: 54vh;
-        max-height: 54vh;
+        max-height: $tablet-gums-grid-view-height;
     }
     .gum-text {
         min-height: 160px;
@@ -160,7 +160,7 @@ $gum-rarity-ultra-rare-color: #FF6EFF;
         display: block;
         grid-row: 1;
         grid-column: 2;
-        min-height: 60vh;
+        min-height: $tablet-gums-grid-view-height + 4vh;
         margin: 16px;
         padding: 16px;
         .gum-img {

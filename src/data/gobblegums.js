@@ -513,10 +513,15 @@ const all_gums = {
             img: "img/gg/gg_reign_drops.png"
         }
     ]
-}
+};
 
 const flattened_gums = [...all_gums.classic.normal, ...all_gums.classic.whimsical,
-...all_gums.mega, ...all_gums.rare, ...all_gums.ultra_rare]
+...all_gums.mega, ...all_gums.rare, ...all_gums.ultra_rare];
+
+// configure images path basename
+const basename = '';
+flattened_gums.forEach(gum => gum.img = basename + gum.img);
+// note: gum objects image path should be modified by object reference
 
 const gums_rarity = {
     'whimsical': {
@@ -535,24 +540,20 @@ const gums_rarity = {
         style: 'gum-rarity-ultra-rare',
         text: 'ULTRA RARE'
     }
-}
-
-// configure images path basename
-const basename = '/'
-flattened_gums.forEach(gum => gum.img = basename + gum.img)
+};
 
 // Flatten 'gobblegums' array for easier linear search
 export default {
-    map: all_gums,
+    tree: all_gums,
     flattened: flattened_gums,
     rarity: gums_rarity,
     getGumByName: gumName => flattened_gums.find(gum => gum.name === gumName),
     getGumCategory: targetGum => {
-        const finder = gum => gum.name === targetGum.name
-        const classic_gums = [...all_gums.classic.normal, ...all_gums.classic.whimsical]
-        if (classic_gums.find(finder)) return 'Classic'
-        const mega_gums = [...all_gums.mega, ...all_gums.rare, ...all_gums.ultra_rare]
-        if (mega_gums.find(finder)) return 'Mega'
-        return 'Unknown'
+        const finder = gum => gum.name === targetGum.name;
+        const classic_gums = [...all_gums.classic.normal, ...all_gums.classic.whimsical];
+        if (classic_gums.find(finder)) return 'Classic';
+        const mega_gums = [...all_gums.mega, ...all_gums.rare, ...all_gums.ultra_rare];
+        if (mega_gums.find(finder)) return 'Mega';
+        return 'Unknown';
     }
-}
+};

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Tabs from 'react-bootstrap/lib/Tabs'
 
@@ -22,4 +23,7 @@ export default class ControlledTabs extends React.Component {
             </Tabs>
         )
     }
+}
+ControlledTabs.propTypes = {
+    children: PropTypes.element
 }
