@@ -1,0 +1,45 @@
+{
+  "name": "bo3-zombies",
+  "version": "1.0.0",
+  "description": "Anything about Call of Duty Black Ops 3 Zombies",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --progress --colors",
+    "watch": "webpack-dev-server"
+  },
+  "author": "JustForFun119",
+  "repository": {
+    "type": "git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "eslint": "^4.4.1",
+    "eslint-plugin-react": "^7.2.1",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.5.5",
+    "webpack-dev-server": "^2.7.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "material-ui": "^0.19.0",
+    "moment": "^2.18.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-bootstrap": "^0.31.2",
+    "react-dom": "^15.6.1",
+    "react-responsive": "^1.3.4",
+    "react-router-bootstrap": "^0.24.2",
+    "react-router-dom": "^4.1.2",
+    "react-swipeable-views": "^0.12.5",
+    "react-tap-event-plugin": "^2.0.1"
+  }
+}

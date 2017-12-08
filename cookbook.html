@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Newton's Cookbook</title>
+    <meta charset="UTF-8">
+    <!--Import material.min.css -->
+    <link rel="stylesheet" href="css/material.min.css">
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <!--Import materialize.css-->
+    <!--<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />-->
+    <link rel="stylesheet" href="css/cookbook.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="container page-wrap">
+        <h4 class="title">Newton's Cookbook</h4>
+        <span class="mdl-chip">
+            <span class="mdl-chip__text">Date/Time: <span id="dateTime"></span></span>
+        </span>
+        <span class="mdl-chip">
+            <span class="mdl-chip__text">Update In: <span id="timeUntilUpdate"></span></span>
+        </span>
+        <div class="tabs-container mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+            <div class="tabs-bar mdl-tabs__tab-bar">
+                <a href="#recipes-panel" class="mdl-tabs__tab">Recipes</a>
+                <a href="#gums-panel" class="mdl-tabs__tab is-active">GobbleGums</a>
+            </div>
+
+            <div class="cookbook-recipes tab-content mdl-tabs__panel" id="recipes-panel">
+                <!-- Simple MDL Progress Bar -->
+                <div id="progCookbookDataLoad" class="mdl-progress mdl-js-progress"></div>
+                <div class="more-recipes">
+                    <button id="btnPrevDay" class="mdl-button mdl-js-button mdl-button--raised">
+                        Previous Day
+                    </button>
+                    <h5>Recipe of <input id="dateInputRecipe" class="datepicker" type="date" value="" /></h5>
+                    <button id="btnNextDay" class="mdl-button mdl-js-button mdl-button--raised">
+                        Next Day
+                    </button>
+                </div>
+                <h6><span id="recipeDate"></span></h6>
+                <div id="cookbookRecipes" class="cookbook-recipes-cards">
+                    <!-- cookbook recipes goes here... -->
+                </div>
+            </div>
+            <div class="cookbook-gums tab-content mdl-tabs__panel is-active" id="gums-panel">
+                <div id="gumsGrid" class="cookbook-gums-grid">
+                    <!-- GobbleGums grid goes here... -->
+                </div>
+                <div id="gumsRecipes" class="cookbook-gums-recipes">
+                    <!-- Recipes for selected GobbleGum goes here... -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+            <div class="mdl-logo">Call of Duty Black Ops 3 Zombies</div>
+            <ul class="mdl-mini-footer__link-list">
+                <li><a href="#">About</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!--Import jQuery before materialize.js-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/lib/material.min.js"></script>
+    <!--<script type="text/javascript" src="js/lib/materialize.min.js"></script>-->
+    <script src="js/lib/moment.min.js"></script>
+    <script src="js/lib/papaparse.min.js"></script>
+    <script src="js/cookbook.js"></script>
+</body>
+
+</html>

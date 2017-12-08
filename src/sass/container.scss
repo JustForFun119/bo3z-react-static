@@ -1,0 +1,14 @@
+$body-bg-color: #444;
+// Page wrap container
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: $body-bg-color;
+}
+
+.fit-page {
+    height: 0;
+    padding-bottom: 20px;
+}

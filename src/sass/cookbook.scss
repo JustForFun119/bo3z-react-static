@@ -1,0 +1,170 @@
+@import 'container';
+$cookbook-recipes-card-size: 300px;
+.title {
+    text-align: center;
+}
+
+.container {
+    overflow: hidden;
+}
+
+span#dateTime {
+    font-size: medium;
+}
+
+span#timeUntilUpdate {
+    font-size: medium;
+    font-weight: bold;
+}
+
+#progCookbookDataLoad {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.tabs-container {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.tabs-container .tabs-bar {
+    flex: 0 1 auto;
+}
+
+.tabs-container .tab-content {
+    flex: 1 1 auto;
+}
+
+
+/* Cookbook Recipes */
+
+.cookbook-recipes {
+    padding: 0 16px;
+    h5,
+    h6,
+    p {
+        text-align: center;
+    }
+    .more-recipes {
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 8px;
+        * {
+            margin: 0 16px;
+        }
+    }
+}
+
+.cookbook-recipes-cards {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 300px;
+    padding: 16px;
+    background-color: gray;
+    .recipe-card {
+        width: $cookbook-recipes-card-size + 40px;
+        height: $cookbook-recipes-card-size;
+        margin: 16px;
+        >.recipe-product {
+            text-align: center;
+            background-color: rgba(#888, 0.5);
+        }
+        .gum-requires {
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            .gum-require {
+                margin: 4px;
+                font-size: large;
+            }
+        }
+    }
+}
+
+.gum-img-lg {
+    width: 128px;
+    height: 128px;
+}
+
+.gum-img-med {
+    width: 96px;
+    height: 96px;
+}
+
+.gum-img-small {
+    width: 64px;
+    height: 64px;
+}
+
+.viewingDate {
+    font-size: medium;
+}
+
+
+/* Cookbook GobbleGums */
+
+.cookbook-gums {
+    height: 673px;
+    padding: 16px 32px 64px 32px;
+    background-color: #222222;
+    .cookbook-gums-grid {
+        float: left;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: flex-start;
+        width: 50%;
+        height: 600px;
+        margin: 0;
+        overflow-y: scroll;
+        .gum-card {
+            width: auto;
+            min-height: auto;
+            margin: 2px;
+            padding: 4px;
+            transition: .2s;
+            &.gum-na {
+                background-color: rgba(#fff, 0.2)
+            }
+            &:hover {
+                background-color: rgba(#fff, 0.5)
+            }
+        }
+    }
+    .cookbook-gums-recipes {
+        float: right;
+        width: 45%;
+        height: 600px;
+        margin: 0;
+        padding: 8px;
+        overflow-y: scroll;
+        .gum-recipes {
+            .gum-recipe {
+                margin: 8px;
+                min-height: auto;
+                .mdl-card__title * {
+                    margin: 4px;
+                }
+            }
+        }
+        .gum-name {
+            display: inline-block;
+            width: auto;
+            min-height: auto;
+            font-size: 24px;
+            padding: 8px;
+            border-radius: 0px;
+            -webkit-margin-after: 1em;
+        }
+    }
+}
